@@ -26,7 +26,10 @@ public class Person implements IPerson {
 
     @Override
     public IPerson sayHelloToFriends() {
-        // ToDo
+        for(Person person : friends) {
+            System.out.println("Hello " + person.name);
+        }
+        System.out.println("Powiedzialem hello swoim znajomym");
         return this;
     }
 

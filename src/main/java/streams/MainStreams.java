@@ -12,8 +12,6 @@ import java.util.stream.Stream;
 public class MainStreams {
 
     public static void main(String[] args) {
-        LocalVariables example = new LocalVariables();
-        example.method();
 
         //Old Java
         List<Student> students = new ArrayList<>();
@@ -40,6 +38,16 @@ public class MainStreams {
         String[] stringArray = new String[]{"Streams", "can", "be", "created", "from", "arrays"};
 
         Arrays.stream(stringArray).forEach(System.out::println);
+
+        namesNewJava.stream().forEach(System.out::println);
+
+        Stream<Student> whatIsIt = students.stream().filter(s -> s.getName().length() > 2);
+
+        //Local variable example
+        LocalVariables example = new LocalVariables();
+        example.method();
+
     }
+    
 
 }

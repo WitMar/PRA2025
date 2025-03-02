@@ -22,6 +22,8 @@ public class MainLazy {
             // This is followed by terminal operation sum()
         }).sum();
 
+        System.out.println("***");
+
         // lazy evaluation - does not matter where you put the limit
         IntStream.range(1, 100)
                 .map(a -> {
@@ -36,9 +38,11 @@ public class MainLazy {
                 }).limit(5)
                 .forEach(a -> System.out.println(a));
 
+        System.out.println("***");
+
         Stream.of("Sun", "Set", "Run", "Stream").filter(word -> {
             System.out.println(word);
             return word.startsWith("S");
-        }).limit(2).forEach(System.out::println);
+        }).sorted().limit(2).forEach(System.out::println);
     }
 }

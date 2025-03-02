@@ -1,5 +1,6 @@
 package functionsAndLambdas;
 
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
@@ -33,7 +34,7 @@ public class Functions {
         System.out.println(half_3.apply(10));
 
         // Identity function
-        half_3 = half_3.andThen(Function.identity());
+        Function<Integer, Double> half_new = half_3.andThen(Function.identity());
         System.out.println(half_3.apply(10));
     }
 

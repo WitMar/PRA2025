@@ -1,6 +1,7 @@
 package streams;
 
 import streams.model.Human;
+import streams.model.Person;
 
 import java.util.*;
 import java.util.function.Function;
@@ -24,8 +25,10 @@ public class Task {
     }
 
     public static List<String> toUpperCase(List<String> collection) {
-       // ToDo
-        return null;
+        List<String> result = collection.stream()
+                .map(o -> o.toUpperCase())
+                .collect(Collectors.toList());
+        return result;
     }
 
     public static List<String> transformOldJava(List<String> collection) {
@@ -39,8 +42,10 @@ public class Task {
     }
 
     public static List<String> transform(List<String> collection) {
-        // ToDo
-        return null;
+        List<String> result = collection.stream()
+                .filter(o -> o.length() < 4)
+                .collect(Collectors.toList());
+        return result;
     }
 
     /**
@@ -56,10 +61,10 @@ public class Task {
     }
 
     public static Map<String,Human> createMap(List<Human> collection) {
-        // ToDo
-        return null;
+        Map<String, Human> result = collection.stream()
+                .collect(Collectors.toMap(p -> p.getName(), Function.identity()));
+        return result;
     }
-
 
     public static Human getOldestHumanOldJava(List<Human> people) {
         Human oldestHuman = new Human("", 0);
@@ -72,8 +77,10 @@ public class Task {
     }
 
     public static Human getOldestHuman(List<Human> people) {
-        // ToDo
-        return null;
+        Human result = people.stream()
+                .sorted(Comparator.comparing(Human::getAge).reversed())
+                .findFirst().get();
+        return result;
     }
 
     /**
@@ -93,9 +100,11 @@ public class Task {
 
     // use partitionBy
     public static Map<Boolean, List<Human>> partitionAdults(List<Human> people) {
-        // ToDo
-        return null;
+        Map<Boolean, List<Human>> result = people.stream()
+                .collect(Collectors.partitioningBy(p -> p.getAge() > 18));
+        return result;
     }
+
 
     public static List<String> transformListOldJava(List<List<String>> collection) {
         List<String> newCollection = new ArrayList<>();
@@ -109,7 +118,24 @@ public class Task {
 
     //use flatMap
     public static List<String> transformList(List<List<String>> collection) {
-        // ToDo
-        return null;
+        List<String> result = collection.stream()
+                .flatMap(a -> a.stream())
+                .collect(Collectors.toList());
+        return result;
     }
+
+    // HARD examples without rewriting from plain Java
+
+    // Utwórz listę osób z imionami i nazwiskami, a następnie przekształć ją w mapę,
+    // gdzie kluczem jest nazwisko, a wartością lista imion z tym samym nazwiskiem.
+    public static  Map<String, List<String>>  mapNamesSurnames(List<Person> people) {
+        Map<String, List<String>> namesByLastName = people.stream()
+                .collect(Collectors.groupingBy(
+                        person -> person.firstName,
+                        Collectors.mapping(person -> person.lastName, Collectors.toList())
+                ));
+        return namesByLastName;
+    }
+
+
 }
