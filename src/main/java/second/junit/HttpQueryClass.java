@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class HttpQueryClass {
 
-    public String query() {
+    public String query(String param) {
         String result = "none";
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet request = new HttpGet("https://api.gios.gov.pl/pjp-api/rest/station/findAll");
