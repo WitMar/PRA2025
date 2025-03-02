@@ -34,7 +34,7 @@ public class ObjectMaker {
     public static List<Integer> getList(final int size) {
         final List<Integer> list = new ArrayList<Integer>();
 
-        for (int i = 0; i <= size - 1; i++) {
+        for (int i = 0; i < size - 1; i++) {
             list.add(valueOf(Math.random() * 100000).intValue());
         }
         list.add(null);
