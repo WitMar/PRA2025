@@ -15,12 +15,16 @@ public class MainLazy {
             // No terminal operation so it won't execute
         });
 
+        System.out.println("***");
+
         System.out.println("Terminal operation starts here");
         Arrays.stream(new int[]{0, 1}).map(i -> {
             System.out.println(i);
             return i;
             // This is followed by terminal operation sum()
         }).sum();
+
+        System.out.println("***");
 
         // lazy evaluation - does not matter where you put the limit
         IntStream.range(1, 100)
@@ -35,6 +39,8 @@ public class MainLazy {
                     return a;
                 }).limit(5)
                 .forEach(a -> System.out.println(a));
+
+        System.out.println("***");
 
         Stream.of("Sun", "Set", "Run", "Stream").filter(word -> {
             System.out.println(word);

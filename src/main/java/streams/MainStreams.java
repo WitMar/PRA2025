@@ -12,8 +12,6 @@ import java.util.stream.Stream;
 public class MainStreams {
 
     public static void main(String[] args) {
-        LocalVariables example = new LocalVariables();
-        example.method();
 
         //Old Java
         List<Student> students = new ArrayList<>();
@@ -21,17 +19,17 @@ public class MainStreams {
         students.add(new Student("John", 1L, 3L));
         students.add(new Student("Barrack", 2L, 1L));
         List<String> names = new ArrayList<>();
-        for (Student student: students) {
-            if (student.getName ().startsWith("A")) {
-                names.add (student.getName ());
+        for (Student student : students) {
+            if (student.getName().startsWith("A")) {
+                names.add(student.getName());
             }
         }
 
         //Java 8, and above
-        List <String> namesNewJava = students.stream()
+        List<String> namesNewJava = students.stream()
                 .map(student -> student.getName())
-                .filter (name-> name.startsWith("A"))
-                .collect (Collectors.toList());
+                .filter(name -> name.startsWith("A"))
+                .collect(Collectors.toList());
 
 
         //stream
@@ -40,6 +38,10 @@ public class MainStreams {
         String[] stringArray = new String[]{"Streams", "can", "be", "created", "from", "arrays"};
 
         Arrays.stream(stringArray).forEach(System.out::println);
+
+        //  Local Variables
+        //  LocalVariables example = new LocalVariables();
+        //  example.method();
     }
 
 }

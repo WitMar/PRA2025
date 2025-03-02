@@ -3,11 +3,9 @@ package collections;
 import streams.Task;
 import streams.model.Human;
 import org.junit.Test;
+import streams.model.Person;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -69,4 +67,22 @@ public class TaskTest {
         assertThat(result,is(map));
     }
 
+    @Test
+    public void mapNameToLastName() {
+        Person sara = new Person("Sara", "A");
+        Person sara2 = new Person("Sara", "B");
+        Person eva = new Person("Eva", "C");
+        Person john = new Person("John", "D");
+        List<Person> list = Arrays.asList(sara, sara2, eva, john);
+        Map<String, List<String>> map = new HashMap<>();
+        map.put(sara.firstName,new ArrayList<>());
+        map.put(eva.firstName,new ArrayList<>());
+        map.put(john.firstName,new ArrayList<>());
+        map.get(sara.firstName).add(sara.lastName);
+        map.get(sara2.firstName).add(sara2.lastName);
+        map.get(eva.firstName).add(eva.lastName);
+        map.get(john.firstName).add(john.lastName);
+        Map<String, List<String>> result = Task.mapNamesSurnames(list);
+        assertThat(result,is(map));
+    }
 }

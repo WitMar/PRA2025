@@ -1,6 +1,7 @@
 package streams;
 
 import streams.model.Human;
+import streams.model.Person;
 
 import java.util.*;
 import java.util.function.Function;
@@ -112,4 +113,14 @@ public class Task {
         // ToDo
         return null;
     }
+
+    // HARD examples without rewriting from plain Java
+
+    // Utwórz listę osób z imionami i nazwiskami, a następnie przekształć ją w mapę,
+    // gdzie kluczem jest nazwisko, a wartością lista imion z tym samym nazwiskiem.
+    public static  Map<String, List<String>>  mapNamesSurnames(List<Person> people) {
+        Map<String, List<String>> namesByLastName = new HashMap<>();
+        return namesByLastName;
+    }
+
 }
