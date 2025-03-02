@@ -20,6 +20,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static java.lang.Double.valueOf;
+
 /**
  * STOP LOOKING AT THIS CLASS!! IT'S OFF LIMITS!
  *
@@ -33,7 +35,7 @@ public class ObjectMaker {
         final List<Integer> list = new ArrayList<Integer>();
 
         for (int i = 0; i <= size - 1; i++) {
-            list.add(new Double(Math.random() * 100000).intValue());
+            list.add(valueOf(Math.random() * 100000).intValue());
         }
         list.add(null);
 
@@ -44,7 +46,7 @@ public class ObjectMaker {
         final Object[] array = new Object[size];
 
         for (int i = 0; i <= size - 1; i++) {
-            array[i] = new Double(Math.random() * 100000);
+            array[i] = Double.valueOf(Math.random() * 100000);
         }
 
         //array[(int) (Math.random() * (size - 1))] = null;
