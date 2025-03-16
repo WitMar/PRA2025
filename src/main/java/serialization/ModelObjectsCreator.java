@@ -2,6 +2,7 @@ package serialization;
 
 import model.Address;
 import model.Employee;
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class ModelObjectsCreator {
         emp.setLastName("Polak" + new Random().nextInt());
         emp.setSalary(100);
         emp.setPesel(Math.abs(new Random().nextInt()));
+        emp.setBirthDate(DateTime.now());
 
         emp2 = new Employee();
         emp2.setFirstName("Roman");
@@ -59,7 +61,7 @@ public class ModelObjectsCreator {
         emp.getSubworkers().add(emp2);
 
         //This will give us infinite recursion
-        //emp2.getManagers().add(emp);
+        emp2.getManagers().add(emp);
 
         employees = new ArrayList<Employee>();
         employees.add(emp);

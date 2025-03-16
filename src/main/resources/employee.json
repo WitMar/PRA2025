@@ -2,7 +2,7 @@
   "id" : 0,
   "firstName" : "Jan",
   "lastName" : "Polak-2141073313",
-  "salary" : 100,
+  "wynagrodzenie" : 100,
   "pesel" : 2056167306,
   "address" : {
     "id" : 0,
@@ -17,7 +17,7 @@
     "id" : 0,
     "firstName" : "Roman",
     "lastName" : "Polak-2063430509",
-    "salary" : 100,
+    "wynagrodzenie" : 100,
     "pesel" : 708657629,
     "address" : {
       "id" : 0,

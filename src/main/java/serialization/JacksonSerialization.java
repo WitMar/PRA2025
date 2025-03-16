@@ -1,7 +1,10 @@
 package serialization;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import model.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class JacksonSerialization {
 
@@ -21,7 +25,7 @@ public class JacksonSerialization {
 
         //Create objects to serialize
         ModelObjectsCreator objectsCreator = new ModelObjectsCreator();
-        Employee employee = objectsCreator.getEmp();
+        List<Employee> employee = objectsCreator.getEmployees();
 
         //Serialize to file and string
         mapper.writeValue(new File("result." + fileSuffix), employee);
@@ -31,11 +35,11 @@ public class JacksonSerialization {
         logger.info(jsonString);
 
         //Deserialize from file
-        Employee deserializedEmployee = mapper.readValue(
-                new File("result." + fileSuffix), Employee.class);
+        List<Employee> deserializedEmployee = mapper.readValue(
+                new File("result." + fileSuffix), new TypeReference<List<Employee>>() { } );
 
         //Give a rise
-        deserializedEmployee.setSalary(deserializedEmployee.getSalary() * 2);
+        deserializedEmployee.get(0).setSalary(deserializedEmployee.get(0).getSalary() * 2);
 
         //Serialize back
         mapper.writeValue(new File("result-modified." + fileSuffix), deserializedEmployee);
@@ -64,8 +68,12 @@ public class JacksonSerialization {
     public static void main(String[] args) throws IOException {
 
         ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.registerModule(new JodaModule());
         serializeDemo(jsonMapper, "json");
         deserializeDemo(jsonMapper, "json");
+//        ObjectMapper xmlMapper = new XmlMapper();
+//        serializeDemo(xmlMapper, "xml");
+//        deserializeDemo(xmlMapper, "xml");
 
     }
 }
