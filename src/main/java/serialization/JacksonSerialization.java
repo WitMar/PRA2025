@@ -65,7 +65,7 @@ public class JacksonSerialization {
 
         ObjectMapper jsonMapper = new ObjectMapper();
         serializeDemo(jsonMapper, "json");
-        //deserializeDemo(jsonMapper, "json");
+        deserializeDemo(jsonMapper, "json");
 
     }
 }
