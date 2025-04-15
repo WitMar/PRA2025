@@ -60,6 +60,10 @@ public class IndexController {
         productService.saveProduct(p2);
         productService.saveProduct(p3);
 
+        data.getSellers().add(seller);
+        data.getSellers().add(seller2);
+
+
         return "Model Generated";
     }
 }
