@@ -2,6 +2,7 @@ package com.pracownia.spring.controllers;
 
 import com.pracownia.spring.model.Product;
 import com.pracownia.spring.services.ProductService;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -96,7 +97,7 @@ public class ProductController {
      *
      * @return
      */
-   // @ApiModelProperty(hidden = true)
+    @Hidden
     @RequestMapping(value = "/productsList")
     public Iterable<Product> redirect() {
         return productService.listAllProducts();
