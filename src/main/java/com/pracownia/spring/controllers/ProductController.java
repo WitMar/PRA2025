@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -62,12 +61,6 @@ public class ProductController {
         product.setProductId(UUID.randomUUID().toString());
         productService.saveProduct(product);
         return ResponseEntity.ok().build();
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public String handleException(MethodArgumentNotValidException exception) {
-        return exception.getFieldError().toString();
     }
 
     /**
