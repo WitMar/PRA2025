@@ -63,9 +63,13 @@ public class SellerController {
         return sellerService.getBestSeller().get();
     }
 
-    @GetMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
+    @GetMapping(value = "/seller/{id}", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
-    public Seller getByPublicId(@PathVariable("id") Integer publicId) {
-        return sellerService.getSellerById(publicId).get();
+    public ResponseEntity<Seller> getSellerByPublicId(@PathVariable("id") Integer publicId) {
+        Optional<Seller> seller = sellerService.getSellerById(publicId);
+        if (seller.isPresent()) {
+            return ResponseEntity.ok(seller.get());
+        } else
+            return ResponseEntity.noContent().build();
     }
 }

@@ -2,6 +2,7 @@ package com.pracownia.spring.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.validation.constraints.Max;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
@@ -11,8 +12,8 @@ import java.util.Set;
 /**
  * Product entity.
  */
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class,
-        property="refId", scope=Product.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+        property = "refId", scope = Product.class)
 public class Product {
 
     private Integer id;
@@ -21,6 +22,7 @@ public class Product {
 
     private String name;
 
+    @Max(value = 100, message = "Price has to be at mst 100")
     private BigDecimal price;
 
     private DateTime bestBeforeDate;

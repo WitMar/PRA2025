@@ -3,12 +3,13 @@ package com.pracownia.spring.controllers;
 import com.pracownia.spring.model.Product;
 import com.pracownia.spring.services.ProductService;
 import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -58,16 +59,10 @@ public class ProductController {
      * Save product to database.
      */
     @PostMapping(value = "/product")
-    public ResponseEntity<Object> create(@RequestBody Product product) {
+    public ResponseEntity<Object> create(@RequestBody @NotNull @Valid Product product) {
         product.setProductId(UUID.randomUUID().toString());
         productService.saveProduct(product);
-        return ResponseEntity.ok().build();
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public String handleException(MethodArgumentNotValidException exception) {
-        return exception.getFieldError().toString();
+        return ResponseEntity.ok().body(product);
     }
 
     /**
@@ -107,5 +102,6 @@ public class ProductController {
     public ResponseEntity deleteBadRequest(@PathVariable Integer id) {
         return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
+
 
 }
