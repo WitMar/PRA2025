@@ -36,7 +36,7 @@ class Manager {
             Employee emp = createEmployee();
 
             // Save in First order Cache (not database yet)
-            session.save(emp);
+            session.persist(emp);
 
             Employee employee = session.get(Employee.class, emp.getId());
             if (employee == null) {
