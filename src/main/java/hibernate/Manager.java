@@ -1,10 +1,12 @@
 package hibernate;
 
+import hibernate.model.Address;
 import hibernate.model.Employee;
 import hibernate.queries.Queries;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import org.flywaydb.core.Flyway;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -14,6 +16,12 @@ import java.util.Random;
 class Manager {
 
     public static void main(String[] args) {
+
+        Flyway flyway = Flyway.configure()
+                .dataSource("jdbc:hsqldb:mem:PRA", "sa", "")
+                .locations("classpath:db/migration")
+                .load();
+        flyway.migrate();
 
         System.out.println("Start");
 
@@ -36,7 +44,7 @@ class Manager {
             Employee emp = createEmployee();
 
             // Save in First order Cache (not database yet)
-            session.save(emp);
+            session.persist(emp);
 
             Employee employee = session.get(Employee.class, emp.getId());
             if (employee == null) {
@@ -47,13 +55,36 @@ class Manager {
 
             System.out.println("Employee " + employee.getId() + " " + employee.getFirstName() + employee.getLastName());
 
-            //changeFirstGuyToNowak(session);
+            changeFirstGuyToNowak(session);
+            employee.setLastName("NowakPRE" + new Random().nextInt()); // No SQL needed
+            session.flush();
+            session.refresh(employee);
             employee.setLastName("NowakPRE" + new Random().nextInt()); // No SQL needed
 
+            List<Employee> employees = new Queries(session).getThemAll();
+            
             //Commit transaction to database
             session.getTransaction().commit();
-
+            session.refresh(employee);
             System.out.println("Done");
+
+            session.close();
+
+
+            session.beginTransaction();
+            Address add = session.get(Address.class, 1);
+
+            // Need to be not null before commmit
+            employee.getAddress().setStreet("noname");
+            employee.setAddress(add);
+            session.persist(employee);
+            session.getTransaction().commit();
+
+            session.beginTransaction();
+            Address add2 = session.get(Address.class, 1);
+            employee.getAddress().setStreet(null);
+            session.persist(add2);
+            session.getTransaction().commit();
 
             session.close();
 

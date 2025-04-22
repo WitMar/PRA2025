@@ -1,6 +1,9 @@
 package hibernate.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -22,8 +25,31 @@ public class Employee {
     @Column(name = "salary")
     private int salary;
 
+    @ElementCollection
+    private List<String> phones = new ArrayList<>();
+
     @Column(name = "PESEL", nullable = false, unique = true)
     private int pesel;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="Address_ID", referencedColumnName = "id")
+    Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<String> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<String> phones) {
+        this.phones = phones;
+    }
 
     public Employee() {}
 

@@ -18,4 +18,9 @@ public class Queries {
                 "SELECT c FROM Employee c WHERE c.lastName LIKE :name", Employee.class)
                 .setParameter("name", "%" + name + "%").list();
     }
+
+    public List<Employee> getThemAll() {
+        return session.createQuery(
+                "FROM Employee", Employee.class).getResultList();
+    }
 }
