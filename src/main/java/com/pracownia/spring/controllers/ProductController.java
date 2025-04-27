@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -101,6 +102,16 @@ public class ProductController {
     @DeleteMapping(value = "/products/{id}")
     public ResponseEntity deleteBadRequest(@PathVariable Integer id) {
         return new ResponseEntity(HttpStatus.FORBIDDEN);
+    }
+
+    @GetMapping(value = "/products/{page}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<Product> list(@PathVariable("page") Integer pageNr,@RequestParam(value = "size",required = false) Optional<Integer> howManyOnPage) {
+        return productService.listAllProductsPaging(pageNr, howManyOnPage.orElse(2));
+    }
+
+    @GetMapping(value = "/products/promo/{price}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<Product> list(@PathVariable("price") Integer price) {
+        return productService.listAllBelowPrice(price);
     }
 
 

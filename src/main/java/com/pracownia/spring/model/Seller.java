@@ -3,11 +3,13 @@ package com.pracownia.spring.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import org.hibernate.envers.Audited;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Audited
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "refSelId", scope = Seller.class)
 public class Seller {

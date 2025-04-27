@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
+import org.hibernate.envers.Audited;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.util.Set;
  * Product entity.
  */
 @Entity
+@Audited
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "refId", scope = Product.class)
 public class Product {

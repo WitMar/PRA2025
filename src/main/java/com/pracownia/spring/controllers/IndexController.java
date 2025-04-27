@@ -1,10 +1,7 @@
 package com.pracownia.spring.controllers;
 
-import com.pracownia.spring.model.DataSet;
 import com.pracownia.spring.model.Product;
 import com.pracownia.spring.model.Seller;
-import com.pracownia.spring.repositories.ProductRepository;
-import com.pracownia.spring.repositories.SellerRepository;
 import com.pracownia.spring.services.ProductService;
 import com.pracownia.spring.services.SellerService;
 import org.joda.time.DateTime;

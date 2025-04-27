@@ -18,4 +18,8 @@ public interface ProductService {
     Boolean checkIfExist(Integer id);
 
     List<Product> getProductBySellerId(int id);
+
+    Iterable<Product> listAllProductsPaging(Integer pageNr, Integer howManyOnPage);
+
+    Iterable<Product> listAllBelowPrice(Integer price);
 }
