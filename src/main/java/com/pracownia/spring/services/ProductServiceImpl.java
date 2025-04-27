@@ -1,17 +1,15 @@
 package com.pracownia.spring.services;
 
-import com.pracownia.spring.model.DataSet;
 import com.pracownia.spring.model.Product;
-import com.pracownia.spring.model.Seller;
+import com.pracownia.spring.repositories.ProductRepository;
+import com.pracownia.spring.repositories.ProductRepositoryCustom;
+import com.pracownia.spring.repositories.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Product service implement.
@@ -20,33 +18,35 @@ import java.util.stream.Stream;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    private DataSet data;
+    private ProductRepository data;
+
+    @Autowired
+    private SellerRepository sellerData;
 
     @Override
     public Iterable<Product> listAllProducts() {
-        return data.getProducts();
+        return data.findAll();
     }
 
     @Override
     public Optional<Product> getProductById(Integer id) {
-        return data.getProducts().stream().filter(p -> p.getId().equals(id)).findFirst();
+        return data.findById(id);
     }
 
     @Override
     public Product saveProduct(Product product) {
-        product.setId(new Random().nextInt());
-        data.getProducts().add(product);
+        data.save(product);
         return product;
     }
 
     @Override
     public void deleteProduct(Integer id) {
-        data.getProducts().removeIf(p -> p.getId().equals(id));
+        data.deleteById(id);
     }
 
     @Override
     public Boolean checkIfExist(Integer id) {
-        if (data.getProducts().stream().anyMatch(p -> p.getId().equals(id)))
+        if (data.existsById(id))
             return true;
         else
             return false;
@@ -54,13 +54,23 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductBySellerId(int id) {
-        ArrayList<Product> products = new ArrayList<Product>();
-        Optional<Seller> seller = data.getSellers().stream().filter(s -> s.getId() == id).findFirst();
-        if(seller.isPresent()) {
-             products.addAll(data.getProducts().stream().filter(p -> p.getSellers().contains(seller.get().getId())).collect(Collectors.toList()));
-        }
-        return products;
+        return data.findBySellerId(id);
     }
+
+    @Override
+    public Iterable<Product> listAllProductsPaging(Integer pageNr, Integer howManyOnPage) {
+        return data.findAll(PageRequest.of(pageNr,howManyOnPage));
+    }
+
+    @Autowired
+    ProductRepositoryCustom productRepositoryWithCQ;
+
+    @Override
+    public Iterable<Product> listAllBelowPrice(Integer price) {
+        return productRepositoryWithCQ.listAffordableProducts(price);
+    }
+
+
 
 
 }

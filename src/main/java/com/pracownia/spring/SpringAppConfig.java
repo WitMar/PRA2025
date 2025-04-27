@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
-import com.pracownia.spring.model.DataSet;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.boot.SpringBootConfiguration;
@@ -14,10 +13,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @SpringBootConfiguration
 public class SpringAppConfig {
-    @Bean
-    public DataSet sellers() {
-        return new DataSet();
-    }
 
     // To fix some issues with validator on Spring start
     @Bean
