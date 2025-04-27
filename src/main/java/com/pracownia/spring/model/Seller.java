@@ -1,18 +1,35 @@
 package com.pracownia.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+        property = "refSelId", scope = Seller.class)
 public class Seller {
 
+    @Id
+    @GeneratedValue(generator = "gen")
+    @SequenceGenerator(name = "gen", sequenceName = "seller_seq")
+    @Column(name = "id")
     private int id;
 
+    @Column
     private String name;
 
+    @Column
     private String city;
 
+    @ElementCollection
+    @CollectionTable(name = "products")
+    @Column(name = "product_id")
     private List<String> products = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "sellers")
     private List<Product> productsOb;
 
     public List<Product> getProductsOb() {

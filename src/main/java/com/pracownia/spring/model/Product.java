@@ -2,6 +2,7 @@ package com.pracownia.spring.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import org.joda.time.DateTime;
 
@@ -12,21 +13,29 @@ import java.util.Set;
 /**
  * Product entity.
  */
+@Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "refId", scope = Product.class)
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column
     private String productId;
 
+    @Column
     private String name;
 
-    @Max(value = 100, message = "Price has to be at mst 100")
+    @Column
+    @Max(value = 100)
     private BigDecimal price;
 
+    @Column(length = 1000)
     private DateTime bestBeforeDate;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Seller> sellers = new HashSet<>();
 
     //required by Hibernate
