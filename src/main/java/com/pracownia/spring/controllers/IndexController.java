@@ -3,7 +3,10 @@ package com.pracownia.spring.controllers;
 import com.pracownia.spring.model.DataSet;
 import com.pracownia.spring.model.Product;
 import com.pracownia.spring.model.Seller;
+import com.pracownia.spring.repositories.ProductRepository;
+import com.pracownia.spring.repositories.SellerRepository;
 import com.pracownia.spring.services.ProductService;
+import com.pracownia.spring.services.SellerService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -24,7 +28,7 @@ import java.util.UUID;
 public class IndexController {
 
     @Autowired
-    private DataSet data;
+    SellerService sellerService;
 
     @Autowired
     ProductService productService;
@@ -38,12 +42,12 @@ public class IndexController {
     @PostMapping(value = "generateModel", produces = MediaType.TEXT_PLAIN_VALUE)
     public String generateModel() {
 
-        DateTime dateAndTime = DateTime.now();
+        DateTime dateAndTime  = DateTime.now();
 
-        Product p0 = new Product(UUID.randomUUID().toString(), "Chleb", new BigDecimal(3.50), dateAndTime.plusDays(7));
-        Product p1 = new Product(UUID.randomUUID().toString(), "Jajko", new BigDecimal(2.50), dateAndTime.plusDays(7));
-        Product p2 = new Product(UUID.randomUUID().toString(), "Masło", new BigDecimal(3.50), dateAndTime.plusDays(7));
-        Product p3 = new Product(UUID.randomUUID().toString(), "Mąka", new BigDecimal(1.50), dateAndTime.plusDays(7));
+        Product p0 = new Product(UUID.randomUUID().toString(),"Chleb", new BigDecimal(3.50), dateAndTime.plusDays(7));
+        Product p1 = new Product(UUID.randomUUID().toString(),"Jajko", new BigDecimal(2.50), dateAndTime.plusDays(7));
+        Product p2 = new Product(UUID.randomUUID().toString(),"Masło", new BigDecimal(3.50), dateAndTime.plusDays(7));
+        Product p3 = new Product(UUID.randomUUID().toString(),"Mąka", new BigDecimal(1.50), dateAndTime.plusDays(7));
 
 
         Seller seller = new Seller("Biedra", "Poznan", Arrays.asList(p1.getProductId(), p2.getProductId(), p3.getProductId()));
@@ -60,9 +64,8 @@ public class IndexController {
         productService.saveProduct(p2);
         productService.saveProduct(p3);
 
-        data.getSellers().add(seller);
-        data.getSellers().add(seller2);
-
+        Seller seller3 = new Seller("Kaufland", "Poznan", new ArrayList<>());
+        sellerService.saveSeller(seller3);
 
         return "Model Generated";
     }
