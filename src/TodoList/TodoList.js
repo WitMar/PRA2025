@@ -18,8 +18,8 @@ class TodoList extends React.Component {
                 <ul>
                     <li style={greenStyle}>Learn React</li>
                     <Undone>Pass Programming Laboratoty</Undone>
-                    <Todo value ="Have a nice holiday"
-                          done = {false}   />
+                    <Todo value="Have a nice holiday"
+                          done={false}   />
                 </ul>
             </div>
         );
